@@ -13,7 +13,7 @@ kubectl create -f logging-namespace.yaml
 kubectl create -f ./counter
 kubectl create -f ./fluentd
 kubectl create -f ./head
-kubectl create -f ./elasticsearch/nfs
+kubectl create -f ./elasticsearch/nfs       ## 先执行elasticsearch目录里面的nfs
 kubectl create -f ./elasticsearch
 kubectl create -f ./kibana
 ```
