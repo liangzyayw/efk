@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nfs-elasticsearch-provisioner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nfs-elasticsearch-provisioner
+  template:
+    metadata:
+      labels:
+        app: nfs-elasticsearch-provisioner
+    spec:
+      serviceAccountName: nfs-elasticsearch-provisioner
+      containers:
+        - name: nfs-elasticsearch-provisioner
+          image: quay.io/external_storage/nfs-client-provisioner:latest
+          volumeMounts:
+            - name: nfs-elasticsearch-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: fuseim.pri/ifs
+            - name: NFS_SERVER
+              value: 192.168.1.115
+            - name: NFS_PATH
+              value: /data/nfs/elasticsearch
+      volumes:
+        - name: nfs-elasticsearch-root
+          nfs:
+            server: 192.168.1.115
+            path: /data/nfs/elasticsearch

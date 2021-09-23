@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: elasticsearch-head
+  namespace: logging
+spec:
+  rules:
+  - host:  head.liangzy.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: elasticsearch-head
+          servicePort: 9100
